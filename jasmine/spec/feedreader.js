@@ -54,13 +54,12 @@ $(function() {
     describe('Initial Entries', function() {
 
  		beforeEach(function(done){ //ensure feed is loaded prior to testing
-			loadFeed(0);
-			done();
+			loadFeed(0, done); //https://github.com/aayusharora/Feed-Reader-Testing/blob/master/jasmine/spec/feedreader.js
 		});
-		it('has at least one entry',function (done) { 
+		it('has at least one entry',function () { 
 			//at least a single .entry element within the .feed container
-			expect($('.feed').find('.entry')).toBeDefined();
-			done();
+			var entryElement = $('.feed').find('.entry').length
+			expect(entryElement).toBeGreaterThan(0);
 		}) 
 	});
 
@@ -72,19 +71,17 @@ $(function() {
 
 		beforeEach(function(done){  //ensure feed is loaded and reloaded before comparison
 			loadFeed(0, function () {
-			loadOne = $('.feed').html; //storing initial feed
-			done();
+			loadOne = $('.feed').html(); //storing initial feed
 			
 			loadFeed(1, function () {
-			loadTwo = $('.feed').html;
+			loadTwo = $('.feed').html();
 			done();
 				});
 			});
 		});
 		
-		it('content changes when loaded',function (done) {
+		it('content changes when loaded',function () {
 			expect(loadOne).not.toBe(loadTwo);
-			done();
 		});  
 	});
 
